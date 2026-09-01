@@ -65,3 +65,38 @@ Aplikasi ini menggunakan *Event Click*, yang akan mengeksekusi perintah tertentu
 * Visual Basic merupakan bahasa pemrograman yang dikembangkan oleh Microsoft.
 * Bahasa ini menyediakan lingkungan pengembangan terintegrasi (IDE).
 * Fungsi utamanya adalah untuk membangun aplikasi menggunakan pendekatan visual.
+
+
+
+**Nama** : Adeptri Sagala  
+**NIM** : 241712024  
+**Praktikum** : Pemrograman Visual  
+**Catatan Ke** : 3  
+
+---
+
+# Catatan Pertemuan 3: Operator dan Struktur Kendali
+
+## Komponen Visual yang Digunakan
+Pada proyek Pertemuan 3 ini, antarmuka (UI) dirancang menggunakan beberapa komponen berikut:
+* **PictureBox (`picImage`)**: Komponen untuk menampilkan gambar secara dinamis (mengambil gambar dari folder `Assets`). Properti `SizeMode` diubah menjadi `Zoom` agar gambar menyesuaikan ukuran kotak secara proporsional.
+* **TextBox (`txtNilai`)**: Kotak isian tempat pengguna mengetikkan angka nilai (0-100) yang akan diproses oleh logika program.
+* **Button (`btnInput`)**: Tombol interaktif yang memicu proses validasi dan pergantian gambar berdasarkan rentang nilai saat diklik.
+
+## Logika Program (Event Handler)
+Aplikasi ini memanfaatkan dua *event* utama untuk menjalankan validasi berlapis dan penentuan kondisi:
+* **Validasi Saat Mengetik (`txtNilai_KeyPress`)**: Program mendeteksi ketikan *keyboard* secara langsung. Jika karakter yang diketik bukan tombol kontrol/Backspace (`Not Char.IsControl`) dan bukan angka (`Not Char.IsDigit`), maka program membatalkan karakter tersebut. Ini mencegah pengguna memasukkan huruf atau simbol.
+* **Pemrosesan Tombol Input (`btnInput_Click`)**:
+  1. **Cek Validitas Angka**: Program mencoba mengonversi teks ke `Integer`. Jika gagal (misalnya kotak kosong), muncul pesan *"Masukkan dalam bentuk angka"* dan proses dihentikan.
+  2. **Cek Rentang Nilai (0 - 100)**: Menggunakan operator logika `OrElse`. Jika nilai di bawah 0 atau di atas 100, muncul pesan *"Masukkan nilai 0-100"* dan proses dihentikan.
+  3. **Seleksi Kondisi (If-ElseIf-Else)**:
+     * Jika Nilai `<= 50`, program menampilkan gambar `Assets\1.png`.
+     * Jika Nilai `<= 70`, program menampilkan gambar `Assets\2.png`.
+     * Jika seleksi kondisi lainnya (Nilai `> 70`), program menampilkan gambar `Assets\3.png`.
+
+## Sintaks Khusus Visual Basic
+* **`Integer.TryParse()`**: Fungsi aman untuk mengecek dan mengubah teks (`String`) menjadi angka (`Integer`). Tidak akan membuat program *crash* jika konversi gagal, melainkan hanya akan memberikan hasil *False*.
+* **`Focus()` (contoh: `txtNilai.Focus()`)**: Perintah untuk memindahkan kedipan kursor otomatis kembali ke TextBox. Sangat berguna agar pengguna bisa langsung memperbaiki ketikan salah tanpa harus mengeklik kotak menggunakan *mouse*.
+* **`Return`**: Berfungsi untuk memaksa keluar dari blok *Sub* seketika. Jika validasi gagal, baris kode di bawah `Return` (seperti memunculkan gambar) tidak akan dieksekusi.
+* **`e.Handled = True`**: Digunakan di *event KeyPress* untuk menginstruksikan sistem agar "mengabaikan" atau menolak karakter yang baru saja diketik pengguna.
+* **`Image.FromFile()`**: Fungsi untuk memuat file gambar dari penyimpanan (seperti direktori `Assets`) agar bisa ditampilkan ke dalam komponen PictureBox.
