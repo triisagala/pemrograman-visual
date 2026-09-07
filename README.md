@@ -100,3 +100,187 @@ Aplikasi ini memanfaatkan dua *event* utama untuk menjalankan validasi berlapis 
 * **`Return`**: Berfungsi untuk memaksa keluar dari blok *Sub* seketika. Jika validasi gagal, baris kode di bawah `Return` (seperti memunculkan gambar) tidak akan dieksekusi.
 * **`e.Handled = True`**: Digunakan di *event KeyPress* untuk menginstruksikan sistem agar "mengabaikan" atau menolak karakter yang baru saja diketik pengguna.
 * **`Image.FromFile()`**: Fungsi untuk memuat file gambar dari penyimpanan (seperti direktori `Assets`) agar bisa ditampilkan ke dalam komponen PictureBox.
+
+
+## 1. Konsep Utama & Prinsip Antarmuka (UI)
+
+* **Tata Letak Fleksibel**: Properti `Location` (posisi X, Y) dan `Size` (ukuran) pada elemen UI bersifat fleksibel dan dapat disesuaikan secara bebas menggunakan *drag-and-drop* di Visual Studio.
+* **Independensi Kode**: Properti posisi dan ukuran visual sama sekali tidak memengaruhi logika kode program.
+* **Identifikasi Komponen**: Kode program berpatokan pada nama komponen (properti `(Name)`) dan *event handler* yang terhubung (`Handles ...`).
+* **Fitur Penataan Otomatis**:
+  * Gunakan menu **Format** $\rightarrow$ **Align** $\rightarrow$ **Centers / Middles** untuk meratakan posisi antar elemen.
+  * Manfaatkan garis pandu magenta (*Snaplines*) saat menggeser objek untuk presisi tata letak.
+
+---
+
+## 2. Manajemen Folder Asset & File Gambar
+
+### Langkah Pembuatan Folder Assets:
+1. Pada panel **Solution Explorer**, klik kanan pada nama Project (`Latihan Tugas`) $\rightarrow$ **Add** $\rightarrow$ **New Folder**.
+2. Beri nama folder tersebut: `assets`
+3. Salin dua file gambar berikut ke dalam folder `assets`:
+   * `managercewe.png`
+   * `staffcewe.png`
+
+### Pengaturan Wajib File Gambar:
+1. Klik file `managercewe.png` di dalam folder `assets` pada Solution Explorer.
+2. Pada panel **Properties** (kanan bawah), cari properti **`Copy to Output Directory`**.
+3. Ubah nilainya menjadi **`Copy if newer`** (atau `Copy always`).
+4. Lakukan langkah yang sama untuk file `staffcewe.png`.
+
+> **Fungsi**: Agar saat proyek dijalankan (`F5`), Visual Studio otomatis menyalin folder `assets` beserta seluruh gambarnya ke folder eksekusi program (`\bin\Debug\assets\`).
+
+## 3. Spesifikasi Komponen & Properti UI
+
+### Form 1 (Login)
+* **`Form1`**: `Text = Login`, `StartPosition = CenterScreen`, `Size = 300, 350`
+
+| Komponen | Properti `(Name)` | Properti Teks / Aturan Khusus |
+| :--- | :--- | :--- |
+| PictureBox | **`PicProfile`** | `SizeMode = StretchImage` |
+| Label 1 | *(Default)* | `Text = Role :` |
+| ComboBox | **`cbRole`** | `Items = Manager, Staff` |
+| Label 2 | *(Default)* | `Text = Nama :` |
+| TextBox 1 | **`txtNama`** | KeyPress: Menolak input angka |
+| Label 3 | *(Default)* | `Text = NIM :` |
+| TextBox 2 | **`txtNIM`** | KeyPress: Hanya menerima angka & backspace |
+| Button | **`btnLogin`** | `Text = Login` |
+
+
+### Form 2 (Kalkulator Pajak)
+* **`Form2`**: `Text = Pajak`, `StartPosition = CenterScreen`, `MaximizeBox = False`, `Size = 380, 450`
+
+| Komponen | Properti `(Name)` | Properti Teks / Aturan Khusus |
+| :--- | :--- | :--- |
+| Label 1 | *(Default)* | `Text = Pendapatan lebih dari 5 juta , 10% Pajak` |
+| Label 2 | *(Default)* | `Text = Pendapatan lebih dari 30 juta , 20% Pajak` |
+| Label 3 | *(Default)* | `Text = Pendapatan lebih dari 100 juta , 30% Pajak` |
+| Label 4 | *(Default)* | `Text = Masukkan Pendapatan` |
+| Label 5 | *(Default)* | `Text = Rp.` |
+| TextBox | **`txtPendapatan`** | KeyPress: Hanya menerima angka & backspace |
+| Button | **`btnHitung`** | `Text = Hitung` |
+
+
+## 4. Source Code Lengkap
+
+### Full Source Code: Form1.vb
+
+    ' Public Class Form1
+
+    ' 1. KODE SAAT FORM PERTAMA KALI DIBUKA (DEFAULT PILIHAN)
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        cbRole.SelectedIndex = 0
+    End Sub
+
+    ' 2. KODE GANTI GAMBAR PROFIL SAAT COMBOBOX DIGANTI
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbRole.SelectedIndexChanged
+        Dim pathFolderAssets As String = Application.StartupPath & "\assets\"
+
+        If cbRole.SelectedItem IsNot Nothing Then
+            Dim rolePilihan As String = cbRole.SelectedItem.ToString()
+
+            If rolePilihan = "Manager" Then
+                PicProfile.Image = Image.FromFile(pathFolderAssets & "managercewe.png")
+            ElseIf rolePilihan = "Staff" Then
+                PicProfile.Image = Image.FromFile(pathFolderAssets & "staffcewe.png")
+            End If
+        End If
+    End Sub
+
+    ' 3. ATURAN INPUT NAMA: HANYA HURUF & SPASI
+    Private Sub txtNama_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNama.KeyPress
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    ' 4. ATURAN INPUT NIM: HANYA ANGKA & BACKSPACE
+    Private Sub txtNim_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNIM.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    ' 5. KODE TOMBOL LOGIN (DENGAN NAMA & NIM KAMU SENDIRI)
+    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        Dim namaInput As String = txtNama.Text.Trim().ToLower()
+        Dim nimInput As String = txtNIM.Text.Trim()
+
+        ' Sesuikan Nama dan NIM yang kamu inginkan di bawah ini:
+        Dim namaValid As String = "adeptri" ' Masukkan nama kamu (huruf kecil)
+        Dim nimValid As String = "241712024"  ' Masukkan NIM kamu
+
+        If namaInput = namaValid AndAlso nimInput = nimValid Then
+            Me.Hide()
+            Form2.Show()
+        Else
+            MessageBox.Show("Masukkan Akun dengan Benar", "Error Login", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
+End Class
+
+Full Source Code: Form2.vb  
+
+    Public Class Form2
+
+    ' ATURAN INPUT: Hanya boleh angka & Backspace
+    Private Sub txtPendapatan_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtPendapatan.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    ' EVENT KLIK TOMBOL HITUNG
+    Private Sub btnHitung_Click(sender As Object, e As EventArgs) Handles btnHitung.Click
+        Dim pendapatan As Double
+
+        If Double.TryParse(txtPendapatan.Text, pendapatan) Then
+            Dim persentasePajak As Double = 0
+
+            ' Logika Persentase Pajak
+            If pendapatan > 100000000 Then
+                persentasePajak = 0.3 ' 30%
+            ElseIf pendapatan > 30000000 Then
+                persentasePajak = 0.2 ' 20%
+            ElseIf pendapatan > 5000000 Then
+                persentasePajak = 0.1 ' 10%
+            Else
+                persentasePajak = 0 ' <= 5 juta pajak Rp 0
+            End If
+
+            ' Menhitung nominal pajak
+            Dim nominalPajak As Double = pendapatan * persentasePajak
+
+            ' Teks Pop-Up Persis Seperti Foto Proyeksi
+            Dim pesan As String = "Pajak yang perlu dibayarkan: Rp " & nominalPajak.ToString("N0")
+
+            ' Menampilkan Pop-Up
+            MessageBox.Show(pesan, "Hasil Perhitungan", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBox.Show("Masukkan nominal pendapatan terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+End Class
+
+
+End Class
+5. Troubleshooting & Solusi Error Umum
+Error BC30678 / BC30460 ('End' statement not valid / End Class expected):
+
+Penyebab: Perintah End Class di baris paling bawah terhapus, terpotong, atau salah ketik (SubEnd Class).
+
+Solusi: Pastikan seluruh file VB diakhiri dengan klausa End Class yang berdiri sendiri di baris paling akhir.
+
+Gambar Profil Tidak Ditemukan / Error Path:
+
+Penyebab: Properti gambar di folder assets belum diubah ke Copy if newer.
+
+Solusi: Ubah properti gambar pada Solution Explorer agar gambar terduplikasi ke direktori build bin\Debug\assets\.
+
+Tombol Login / Hitung Tidak Merespons:
+
+Penyebab: Nama properti (Name) pada desainer tidak cocok dengan penamaan variabel di baris Handles ....
+
+Solusi: Samakan properti (Name) komponen (misalnya: btnLogin, btnHitung, txtPendapatan).
