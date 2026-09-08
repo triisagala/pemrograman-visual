@@ -279,6 +279,35 @@ Penyebab: Properti gambar di folder assets belum diubah ke Copy if newer.
 
 Solusi: Ubah properti gambar pada Solution Explorer agar gambar terduplikasi ke direktori build bin\Debug\assets\.
 
+
+**Nama** : Adeptri Sagala<br>
+**NIM** : 241712024<br>
+**Praktikum** : Pemrograman Visual<br>
+**Catatan Ke** : 4
+
+---
+
+# Catatan Pertemuan 4: Struktur Perulangan (Looping)
+
+## Komponen Visual yang Digunakan
+Pada antarmuka proyek Perulangan ini, terdapat penambahan komponen baru untuk menampilkan sekumpulan data, yaitu:
+* **Label**: Digunakan untuk menampilkan teks petunjuk statis "Nilai Awal :" dan "Nilai Akhir :".
+* **TextBox (`txtNilaiAwal` & `txtNilaiAkhir`)**: Dua buah kotak isian tempat pengguna memasukkan batas awal angka dan batas akhir angka perulangan.
+* **Button (`btnInput`)**: Tombol interaktif untuk memicu berjalannya logika perulangan ketika diklik.
+* **ListBox (`lstHasil`)**: Komponen berupa kotak daftar yang berfungsi untuk menampilkan rentetan hasil angka dari proses perulangan yang dieksekusi secara menurun ke bawah.
+
+## Logika Program (Event Handler)
+Program ini mengombinasikan logika validasi input dengan struktur perulangan:
+* **Validasi Saat Mengetik (`KeyPress`)**: Diterapkan pada kedua TextBox. Program mendeteksi ketikan *keyboard* dan akan menolak input jika karakter yang dimasukkan bukan angka atau tombol kontrol (seperti Backspace).
+* **Pemrosesan Tombol Input (`btnInput_Click`)**:
+  1. **Cek Validitas Tipe Data**: Program mengonversi teks dari kedua TextBox menjadi `Integer` menggunakan fungsi TryParse. Jika gagal atau kosong, muncul pesan *"Masukkan dalam bentuk angka"* dan proses dihentikan.
+  2. **Pembersihan Data Lama**: Program akan mengosongkan isi ListBox terlebih dahulu agar hasil perulangan yang baru tidak menumpuk menyatu dengan hasil perulangan sebelumnya.
+  3. **Eksekusi Perulangan (`For...Next`)**: Program menjalankan instruksi perulangan yang dimulai dari angka yang diinput pada `nilaiAwal` hingga batas `nilaiAkhir`.
+
+## Sintaks Khusus Visual Basic
+* **`lstHasil.Items.Clear()`**: Perintah spesifik pada komponen ListBox yang berfungsi untuk menghapus seluruh baris data (item) yang ada di dalam daftar tersebut.
+* **`For ... To ... Next`**: Struktur kendali dasar perulangan di Visual Basic. Digunakan ketika jumlah putaran (iterasi) sudah diketahui secara pasti berdasarkan nilai awalan dan nilai akhiran. Variabel `i` pada `For i As Integer` bertindak sebagai penghitung (*counter*) putaran.
+
 Tombol Login / Hitung Tidak Merespons:
 
 Penyebab: Nama properti (Name) pada desainer tidak cocok dengan penamaan variabel di baris Handles ....
