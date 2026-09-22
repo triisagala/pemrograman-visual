@@ -8,6 +8,7 @@
 ' </auto-generated>
 '------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 Option Strict On
 Option Explicit On
 
@@ -15,11 +16,17 @@ Option Explicit On
 Namespace My
     
     'NOTE: This file is auto-generated; do not modify it directly.  To make changes,
+=======
+Namespace My
+
+    'NOTE: This file is auto-generated; do not modify it directly. To make changes,
+>>>>>>> 0603657 (Pertemuan6-Database)
     ' or if you encounter build errors in this file, go to the Project Designer
     ' (go to Project Properties or double-click the My Project node in
     ' Solution Explorer), and make changes on the Application tab.
     '
     Partial Friend Class MyApplication
+<<<<<<< HEAD
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Public Sub New()
@@ -41,5 +48,21 @@ Namespace My
             Me.MinimumSplashScreenDisplayTime = 0
             Return MyBase.OnInitialize(commandLineArgs)
         End Function
+=======
+
+        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
+        Public Sub New()
+            MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuthenticationMode.Windows)
+            Me.IsSingleInstance = False
+            Me.EnableVisualStyles = True
+            Me.SaveMySettingsOnExit = True
+            Me.ShutDownStyle = Global.Microsoft.VisualBasic.ApplicationServices.ShutdownMode.AfterMainFormCloses
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
+        Protected Overrides Sub OnCreateMainForm()
+            Me.MainForm = Form1
+        End Sub
+>>>>>>> 0603657 (Pertemuan6-Database)
     End Class
 End Namespace
