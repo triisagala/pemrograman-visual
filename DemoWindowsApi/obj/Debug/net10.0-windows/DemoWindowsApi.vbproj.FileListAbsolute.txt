@@ -1,0 +1,16 @@
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\bin\Debug\net10.0-windows\DemoWindowsApi.exe
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\bin\Debug\net10.0-windows\DemoWindowsApi.deps.json
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\bin\Debug\net10.0-windows\DemoWindowsApi.runtimeconfig.json
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\bin\Debug\net10.0-windows\DemoWindowsApi.dll
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\bin\Debug\net10.0-windows\DemoWindowsApi.pdb
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.FrmDemoApi.resources
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.vbproj.GenerateResource.cache
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.AssemblyInfoInputs.cache
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.AssemblyInfo.vb
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.vbproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.dll
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\refint\DemoWindowsApi.dll
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.pdb
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\DemoWindowsApi.genruntimeconfig.cache
+C:\Users\Admin\Downloads\pertemuan-11-kode\DemoWindowsApi\obj\Debug\net10.0-windows\ref\DemoWindowsApi.dll
