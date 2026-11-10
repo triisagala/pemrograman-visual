@@ -2501,3 +2501,55 @@ Bagian ini penting kalau soal teori/praktik menyinggung hal di bawah.
 
 > 💡 **Tips GitHub:** simpan file ini sebagai `README.md` di root repo. Di halaman repo, klik ikon **☰ (Outline)** di pojok kanan atas tampilan file untuk navigasi per bagian. Saat responsi, kombinasi **Ctrl+F** dengan kata kunci (mis. `Filter`, `TryParse`, `ReDim`, `Select Case`) paling cepat.
 
+
+# Asisten Presentasi | Pertemuan 11
+
+**Nama** : Adeptri Sagala  
+**NIM** : 241712024  
+**Mata Kuliah** : Pemrograman Visual  
+
+Repositori ini berisi proyek "Asisten Presentasi" berbasis VB.NET Windows Forms, dibuat pada Pertemuan 11[cite: 9]. Aplikasi ini berfungsi sebagai timer presentasi interaktif dengan dukungan *shortcut keyboard* global dan fungsi *always on top* (selalu berada di atas jendela lain)[cite: 12].
+
+---
+
+## 📌 Fitur Utama
+
+*   **Pengaturan Durasi**: Pengguna dapat mengatur durasi presentasi dalam menit (hingga 180) dan detik (hingga 59) menggunakan kontrol `NumericUpDown`[cite: 10, 12].
+*   **Timer Hitung Mundur**: Menampilkan sisa waktu dalam format `MM:SS` (contoh: `05:00`)[cite: 9, 10, 14]. Timer menggunakan fungsi `GetTickCount64` dari API Windows (`kernel32.dll`) untuk perhitungan waktu yang presisi[cite: 14].
+*   **Mode Ringkas (Compact Mode)**: Menyembunyikan panel pengaturan durasi untuk menghemat ruang layar saat presentasi berlangsung, namun tetap menampilkan sisa waktu[cite: 9, 12].
+*   **Tetap di Atas (Always on Top)**: Memiliki opsi untuk menahan jendela aplikasi agar selalu berada di atas aplikasi lain (seperti PowerPoint atau peramban web) dengan memanfaatkan fungsi `SetWindowPos` dari `user32.dll`[cite: 9, 12, 14].
+*   **Shortcut Keyboard Global**: Mendukung pintasan keyboard untuk mengontrol timer bahkan ketika aplikasi tidak sedang aktif (bekerja di latar belakang) menggunakan `RegisterHotKey` dan `UnregisterHotKey`[cite: 12, 14].
+    *   `Ctrl + Alt + F9`: Memulai atau Menjeda timer[cite: 12, 14].
+    *   `Ctrl + Alt + F10`: Mengulang (Reset) timer[cite: 12, 14].
+*   **Peringatan Visual dan Audio**: Saat waktu habis, warna latar belakang panel timer akan berubah menjadi merah kecoklatan (`#853415`)[cite: 12]. Tersedia juga opsi (Checkbox) untuk memutar bunyi "ding" standar Windows menggunakan `MessageBeep`[cite: 10, 12, 14].
+
+---
+
+## 📌 Struktur Kode
+
+Proyek ini dipisahkan menjadi dua bagian utama untuk membedakan logika antarmuka dan pemanggilan API sistem:
+
+1.  **`ModWindowsApi.vb` (Modul API Windows)**[cite: 14]
+    *   Menyimpan seluruh deklarasi fungsi *Platform Invocation Services (P/Invoke)* untuk memanggil DLL bawaan Windows.
+    *   `GetTickCount64` (kernel32.dll): Mengambil jumlah milidetik sejak sistem dinyalakan, memastikan timer berjalan mulus[cite: 14].
+    *   `MessageBeep` (user32.dll): Memutar suara sistem default[cite: 14].
+    *   `SetWindowPos` (user32.dll): Mengatur posisi-z jendela untuk fitur *Always on Top*[cite: 14].
+    *   `RegisterHotKey` & `UnregisterHotKey` (user32.dll): Mendaftarkan pintasan keyboard ke sistem operasi[cite: 14].
+    *   Berisi konstanta (seperti `WM_HOTKEY`, `VK_F9`, dll.) dan fungsi pembantu untuk menghitung sisa waktu (`HitungSisa`) serta memformat tampilan menit/detik (`FormatSisa`)[cite: 14].
+
+2.  **`FrmDemoApi.vb` (Logika Form Utama)**[cite: 12]
+    *   Mengatur navigasi antarmuka, *event handler* tombol, dan pembaruan komponen `Timer` (`tmrHitung`) setiap *tick* (hitungan)[cite: 12].
+    *   Mencegat pesan sistem Windows (`WndProc`) untuk menangkap tekanan *shortcut keyboard* global (`WM_HOTKEY`)[cite: 12].
+    *   Menangani perubahan mode ukuran form (Mode Ringkas)[cite: 12].
+
+---
+
+## 📌 Desain Antarmuka
+
+Antarmuka dirancang dengan tema biru gelap yang bersih, terdiri dari:
+
+*   **`pnlTimer`**: Panel utama di bagian atas untuk menampilkan status dan sisa waktu besar (`lblSisa`)[cite: 9, 10].
+*   **Tombol Kontrol Utama**: `btnMulai` (besar) untuk mulai/jeda, dan `btnUlangi` untuk mereset waktu[cite: 9, 10].
+*   **Panel `pnlPengaturan`**: Area bawah yang berisi kontrol `NumericUpDown` untuk mengatur menit dan detik, serta `chkBunyi`[cite: 9, 10]. Panel ini dapat disembunyikan menggunakan tombol `btnRingkas`[cite: 10, 12].
+*   **Bilah Status (`lblStatus`)**: Label di bagian paling bawah form yang memberikan informasi instruksional atau status error kepada pengguna secara dinamis (contoh: "Timer siap.", "Waktu habis.")[cite: 9, 10, 12].
+
