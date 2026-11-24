@@ -2553,3 +2553,38 @@ Antarmuka dirancang dengan tema biru gelap yang bersih, terdiri dari:
 *   **Panel `pnlPengaturan`**: Area bawah yang berisi kontrol `NumericUpDown` untuk mengatur menit dan detik, serta `chkBunyi`[cite: 9, 10]. Panel ini dapat disembunyikan menggunakan tombol `btnRingkas`[cite: 10, 12].
 *   **Bilah Status (`lblStatus`)**: Label di bagian paling bawah form yang memberikan informasi instruksional atau status error kepada pengguna secara dinamis (contoh: "Timer siap.", "Waktu habis.")[cite: 9, 10, 12].
 
+# Administrasi Mahasiswa MDI | Pertemuan 12
+
+**Nama** : Adeptri Sagala  
+**NIM** : 241712024  
+**Mata Kuliah** : Pemrograman Visual  
+
+Proyek `AdministrasiMahasiswaMdi` merupakan aplikasi desktop berbasis VB.NET Windows Forms yang menerapkan konsep **Multiple Document Interface (MDI)** pada Pertemuan 12[cite: 18]. Aplikasi ini menggunakan satu jendela induk utama sebagai wadah untuk membuka dan mengelola beberapa jendela anak (*child form*) di dalamnya[cite: 18].
+
+---
+
+## 📌 Struktur Proyek
+
+Berdasarkan *Solution Explorer*, proyek ini terdiri dari beberapa file utama[cite: 18, 19]:
+
+* **`FrmUtama.vb`**: Form induk (*MDI Container*) dengan judul `Pertemuan 12 - Administrasi Mahasiswa MDI` yang menampung seluruh navigasi menu aplikasi[cite: 18].
+* **`FrmMahasiswa.vb`**: Form anak (*child form*) dengan judul `Data Mahasiswa` untuk menampilkan data latihan mahasiswa serta area catatan sementara[cite: 18, 19].
+* **`FrmJurusan.vb`**: Form anak (*child form*) untuk pengelolaan data jurusan[cite: 18, 19].
+* **`FrmTentang.vb`**: Form informasi mengenai aplikasi[cite: 18, 19].
+* **`Program.vb`**: Titik awal (*entry point*) eksekusi aplikasi[cite: 18, 19].
+
+---
+
+## 📌 Desain Antarmuka & Komponen
+
+### 1. Form Utama (`FrmUtama`)
+* **MDI Container**: Area kerja utama berwarna abu-abu yang berfungsi menampung jendela-jendela anak agar tetap berada di dalam bingkai aplikasi utama[cite: 18].
+* **`MenuStrip` (`mnsUtama`)**: Bilah menu navigasi di bagian atas form yang terdiri dari empat menu utama, yaitu **Berkas**, **Data**, **Jendela**, dan **Bantuan**[cite: 18].
+
+### 2. Form Data Mahasiswa (`FrmMahasiswa`)
+* **Ukuran Form**: Diatur dengan dimensi `732 x 575` piksel[cite: 19].
+* **Tabel Data (`DataGridView`)**: Terletak di bagian atas di bawah label `Daftar mahasiswa (data latihan)` untuk menampilkan daftar data mahasiswa[cite: 19].
+* **Area Catatan Sementara**: Dilengkapi label keterangan `Catatan sementara, hilang saat jendela ini ditutup` beserta kotak teks multibaris (*multiline* `TextBox` dengan *scrollbar* vertikal)[cite: 19].
+* **Tombol Aksi (`Button`)**: Tombol `Bersihkan catatan` untuk menghapus isi teks pada kotak catatan[cite: 19].
+* **Menu Konteks (`ContextMenuStrip` - `cmsCatatan`)**: Komponen menu klik kanan yang disematkan pada form untuk pengelolaan opsi catatan[cite: 19].
+
