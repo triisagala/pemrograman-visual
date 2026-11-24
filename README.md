@@ -2588,3 +2588,50 @@ Berdasarkan *Solution Explorer*, proyek ini terdiri dari beberapa file utama[cit
 * **Tombol Aksi (`Button`)**: Tombol `Bersihkan catatan` untuk menghapus isi teks pada kotak catatan[cite: 19].
 * **Menu Konteks (`ContextMenuStrip` - `cmsCatatan`)**: Komponen menu klik kanan yang disematkan pada form untuk pengelolaan opsi catatan[cite: 19].
 
+
+# Daftar Tugas (Integrasi Supabase REST API & Auth) | Pertemuan 13
+
+**Nama** : Adeptri Sagala  
+**NIM** : 241712024  
+**Mata Kuliah** : Pemrograman Visual  
+
+Proyek `DaftarTugas` merupakan aplikasi desktop berbasis VB.NET Windows Forms pada Pertemuan 13 yang mengintegrasikan layanan cloud **Supabase** melalui REST API dan autentikasi pengguna (`SupabaseApi.vb`). Aplikasi ini menerapkan pemrograman asinkron (`Async`/`Await`) untuk mengelola sesi login dan manipulasi data tugas pada tabel `tugas_p13` secara daring (*online*)[cite: 20].
+
+---
+
+## 📌 Fitur Utama Aplikasi
+
+* **Autentikasi & Manajemen Sesi Pengguna**:
+  * Pengguna masuk menggunakan **Email** dan **Kata sandi** untuk memperoleh *access token* sesi dari endpoint autentikasi (`grant_type=password`)[cite: 20].
+  * Aplikasi memvalidasi respons server; jika statusnya `HttpStatusCode.Unauthorized`, sistem menampilkan peringatan terkait pemeriksaan email, kata sandi, dan status konfirmasi akun[cite: 20].
+  * Kontrol antarmuka menyesuaikan status sesi secara otomatis—saat berhasil masuk, kolom **Email**, **Kata sandi**, dan tombol **Masuk** dinonaktifkan, sementara tombol **Keluar dari sesi** dan **Muat ulang** diaktifkan[cite: 20].
+* **Keamanan Akses Data (Row Level Security / RLS)**:
+  * Setiap permintaan data ke REST API menyertakan parameter `token` autentikasi pengguna sehingga akses ke tabel `tugas_p13` berjalan sesuai kebijakan hak akses pengguna yang sedang login (terlihat pada contoh data `"Belajar RLS"`)[cite: 20].
+* **Pengelolaan Daftar Tugas (Tampil & Simpan Data)**:
+  * Mengambil daftar tugas dari server secara terurut berdasarkan kolom `judul` (`?select=id,judul&order=judul`) dan menampilkannya ke dalam komponen daftar di layar[cite: 20].
+  * Pengguna dapat menginput atau memperbarui **Judul tugas** dan menyimpannya melalui tombol **Simpan judul**, disertai pesan umpan balik di bagian bawah form seperti `"Judul berhasil disimpan."`[cite: 20].
+
+---
+
+## 📌 Struktur Kode & Implementasi Teknis (`SupabaseApi.vb`)
+
+1. **Namespace Komunikasi Jaringan & JSON**:
+   * Mengimpor `System.Net`, `System.Net.Http`, `System.Net.Http.Headers`, dan `System.Net.Http.Json` untuk menangani protokol HTTP, pengaturan *header* otorisasi, serta konversi data JSON secara otomatis[cite: 20].
+2. **Konfigurasi Klien HTTP (`Friend Class SupabaseApi`)**:
+   * Menyimpan alamat endpoint proyek Supabase, kunci publik (`PublishableKey`), serta mengatur batas waktu koneksi (*timeout*) selama 20 detik (`TimeSpan.FromSeconds(20)`) pada objek `HttpClient`[cite: 20].
+3. **Pemrograman Asinkron (`Async` / `Await`)**:
+   * Seluruh operasi jaringan menggunakan `Async` dan `Await` dengan nilai kembalian `Task(Of ...)` agar antarmuka Windows Forms tetap responsif selama proses pertukaran data dengan server berlangsung[cite: 20].
+4. **Proses Login & Parsing Token**:
+   * Mengirimkan data kredensial dalam format JSON (`email` dan `password`) ke endpoint token Supabase, memeriksa keberhasilan status HTTP, lalu membaca respons JSON ke dalam model `AuthResponse` untuk mengambil token sesi[cite: 20].
+5. **Pengambilan Data (`ListAsync`)**:
+   * Menggunakan fungsi `Public Shared Async Function ListAsync(token As String) As Task(Of List(Of Tugas))` untuk membuat permintaan `HttpMethod.Get` ke jalur `/rest/v1/tugas_p13?select=id,judul&order=judul` dengan menyertakan `token`[cite: 20].
+   * Memastikan respons valid melalui `EnsureDataSuccess(response)` dan mengonversi isi respons JSON menjadi koleksi objek `List(Of Tugas)` menggunakan `ReadFromJsonAsync`[cite: 20].
+
+---
+
+## 📌 Desain Antarmuka (`Daftar Tugas`)
+
+* **Bagian Autentikasi (Atas)**: Terdiri dari label dan `TextBox` untuk **Email** serta **Kata sandi**, diikuti deretan tiga tombol kontrol sesi yaitu **Masuk**, **Keluar dari sesi**, dan **Muat ulang**[cite: 20].
+* **Bagian Tampilan Data (Tengah)**: Kontrol `ListBox` berukuran lebar yang menampilkan daftar judul tugas dari database Supabase (seperti `"Belajar RLS"`)[cite: 20].
+* **Bagian Input & Status (Bawah)**: Terdiri dari label **Judul tugas**, `TextBox` untuk mengisi judul, tombol **Simpan judul**, serta label indikator status operasi di bagian paling bawah (`"Judul berhasil disimpan."`)[cite: 20].
+
